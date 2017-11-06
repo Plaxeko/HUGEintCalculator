@@ -1,19 +1,12 @@
 
-#include <vector>
-#include <iostream>
-#include <algorithm>    // std::reverse
-#include <string>
 #include <getopt.h>
 #include <sstream>
+#include "BigInt.cpp"
 
-
-using namespace std;
-
-bool verbose = false;
-string copy_next(int *index, string in);
-void add(string in);
 void printhelp();
 void argselect(int argc, char** argv);
+
+
 
 int main(int argc, char** argv)
 {
@@ -40,13 +33,15 @@ int main(int argc, char** argv)
                     if(!(input[i]=='+' ||input[i]==' '||(input[i]>= '0' && input[i]<= '9')))
                     {
                         cout << "Please give one operator(+,*,^) and integer based operands.\n";
-                    return 0;
+                    //return 0;
+                        break;
                     }
                 }
+                BigInt BI;
+                BI.add(input);
+                cout << endl;
+                }
 
-            add(input);
-            cout << endl;
-            }
     }
         return 0;
 }
@@ -72,20 +67,9 @@ void printhelp()
         //exit(1);
 }
 
-string copy_next(int *index, string in){
-    string out;
-    for(int i = *index;;i++){
-        if(in[i]==' ' || in[i]=='\0')
-            break;
-        out.push_back(in[i]);
-        *index = *index + 1;
-    }
-    reverse(out.begin(),out.end());
-    return out;
-}
-
 void argselect(int argc, char** argv)
 {
+    BigInt BI;
     const char* const opt = "hv";
     while(true)
     {
@@ -95,7 +79,7 @@ void argselect(int argc, char** argv)
         switch(select)
         {
         case 'v':
-            verbose = true;
+            BI.verbose = true;
             std::cout << "verbose mode On" << std::endl;
             break;
         case 'h':
@@ -107,51 +91,5 @@ void argselect(int argc, char** argv)
             break;
         }
     }
-}
-
-
-//add function with print
-void add(string in)
-{
-    string res, cur;
-    int index = 2;
-    int carry = 0;
-    int x,y,r;
-    while (index < in.size()){
-        cur = copy_next(&index, in);
-        while(res.size()> cur.size())
-            cur.push_back('0');
-        while(cur.size()> res.size())
-            res.push_back('0');
-        for(int i = 0; i<cur.size();i++) {
-            x =cur[i] - '0';
-            y = res[i] - '0';
-            r = x + y + carry;
-            res[i] = (r%10) + '0';
-            carry = r/10;
-        }
-        if(carry == 1)
-        {
-            res.push_back('1');
-            carry = 0;
-        }
-        index++;
-    }
-
-    for(int i =res.size()-1; i >=0;i--) {
-         res[i];
-            }
-        reverse(res.begin(), res.end());
-
-        //cout << endl;
-
-        if(verbose == true)
-        {
-            cout << "\n" << in << " = " << res;
-            cout << endl;
-        } else{
-            cout << "\n" << res;
-            cout << endl;
-        }
 }
 
