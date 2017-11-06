@@ -5,52 +5,48 @@
 #include <string>
 #include <getopt.h>
 #include <sstream>
-#include<bits/stdc++.h>
+
 
 using namespace std;
 
 bool verbose = false;
-
-
 string copy_next(int *index, string in);
 void add(string in);
 void printhelp();
 void argselect(int argc, char** argv);
 
-
-
 int main(int argc, char** argv)
 {
-    cout << "\n" << "Type help for program use information. Type quit to exit." << "\n\n";
+    cout << "\nType help for program use information. Type quit to exit.\n\n";
     argselect(argc, argv);
 
     string input;
-
     string sstream;
     stringstream readline(input);
+
     readline >> sstream;
-//    char op = sstream[0];
+    //readline.ignore(input.length(),'#');
 
     while(getline(cin, input) || !readline.eof())
     {
-
-
+         if(input[0] == '#') continue;
          if(tolower(input[0]) == 'q'){return 0;}
          if(tolower(input[0]) == 'h')
             {
                 printhelp();
-            }
-            else{
-   // cout<<input<<endl;
+            }else{
 
-    for(int i=0 ;i < input.size();i++){
-        if(!(input[i]=='+' ||input[i]==' '||(input[i]>= '0' && input[i]<= '9'))){
-            cout <<"Please give one operator(+,*,^) and integer based operands.\n";
-            return 0;
+                for(int i=0 ;i < input.size();i++){
+                    if(!(input[i]=='+' ||input[i]==' '||(input[i]>= '0' && input[i]<= '9')))
+                    {
+                        cout << "Please give one operator(+,*,^) and integer based operands.\n";
+                    return 0;
+                    }
+                }
+
+            add(input);
+            cout << endl;
             }
-        }
-        add(input);
-        }
     }
         return 0;
 }
@@ -67,13 +63,13 @@ void printhelp()
                  "* .............................................................................             *\n"
                  "* You can Add (+), multiply (*), and give exponent (^). example input: + 10 10 10           *\n"
                  "* ..........................................................................................*\n"
-                 "* type 'quit' to exit the program                                                           *\n"
+                 "* type 'quit' or just 'q' to exit the program                                               *\n"
                  "* ..........................................................................................*\n"
                  "* You can process a file with one operator and multiple operands per line.                  *\n"
                  "*********************************************************************************************\n"
                  "Created by Amir Torabi. \n"
-     << std::endl;
-  	// exit(1);
+    << std::endl;
+        //exit(1);
 }
 
 string copy_next(int *index, string in){
@@ -113,6 +109,8 @@ void argselect(int argc, char** argv)
     }
 }
 
+
+//add function with print
 void add(string in)
 {
     string res, cur;
@@ -132,26 +130,28 @@ void add(string in)
             res[i] = (r%10) + '0';
             carry = r/10;
         }
-        if(carry == 1){
+        if(carry == 1)
+        {
             res.push_back('1');
             carry = 0;
         }
         index++;
     }
-    string newstring = "";
+
     for(int i =res.size()-1; i >=0;i--) {
          res[i];
             }
         reverse(res.begin(), res.end());
 
+        //cout << endl;
+
         if(verbose == true)
         {
-            cout << in << " = " << res;
+            cout << "\n" << in << " = " << res;
             cout << endl;
         } else{
-            cout << res;
+            cout << "\n" << res;
             cout << endl;
         }
-
 }
 
