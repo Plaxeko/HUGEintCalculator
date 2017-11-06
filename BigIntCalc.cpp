@@ -13,12 +13,14 @@ bool verbose = false;
 
 string copy_next(int *index, string in);
 void add(string in);
+void printhelp();
 void argselect(int argc, char** argv);
-void add(string in);
+
 
 
 int main(int argc, char** argv)
 {
+    printhelp();
     argselect(argc, argv);
 
     string input;
@@ -26,13 +28,14 @@ int main(int argc, char** argv)
     string sstream;
     stringstream readline(input);
     readline >> sstream;
-    char op = sstream[0];
+//    char op = sstream[0];
 
     while(getline(cin, input) || !readline.eof())
     {
 
 
-         if(tolower(op) == 'q'){return 0;}
+         if(tolower(input[0]) == 'q'){return 0;}
+         if(tolower(input[0]) == 'h'){printhelp();break;}
 
    // cout<<input<<endl;
 
@@ -46,7 +49,6 @@ int main(int argc, char** argv)
     }
         return 0;
 }
-
 
 void printhelp()
 {
