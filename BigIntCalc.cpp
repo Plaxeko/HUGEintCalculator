@@ -5,6 +5,7 @@
 #include <string>
 #include <getopt.h>
 #include <sstream>
+#include<bits/stdc++.h>
 
 using namespace std;
 
@@ -20,7 +21,7 @@ void argselect(int argc, char** argv);
 
 int main(int argc, char** argv)
 {
-    printhelp();
+    cout << "\n" << "Type help for program use information. Type quit to exit." << "\n\n";
     argselect(argc, argv);
 
     string input;
@@ -35,36 +36,44 @@ int main(int argc, char** argv)
 
 
          if(tolower(input[0]) == 'q'){return 0;}
-         if(tolower(input[0]) == 'h'){printhelp();break;}
-
+         if(tolower(input[0]) == 'h')
+            {
+                printhelp();
+            }
+            else{
    // cout<<input<<endl;
 
     for(int i=0 ;i < input.size();i++){
         if(!(input[i]=='+' ||input[i]==' '||(input[i]>= '0' && input[i]<= '9'))){
-            printf("Error\n");
+            cout <<"Please give one operator(+,*,^) and integer based operands.\n";
             return 0;
             }
         }
         add(input);
+        }
     }
         return 0;
 }
 
+
 void printhelp()
 {
     std::cout << "*********************************************************************************************\n"
-                 "* Give the system an operator first. Then give a number of integers to perform.             *\n"
+                 "* 1.Give the system an operator first.                                                      *\n"
+                 "* 2.Follow the operator by any number of operands needed seperated by a space.              *\n"
+                 "*                                                                                           *\n"
+                 "* Restart program with flag -v for verbose mode or -h to print help screen                  *\n"
                  "* -v will set the system to verbose mode and display your input before the result.          *\n"
                  "* .............................................................................             *\n"
-                 "* You can Add (+), multiply (*), and give exponent (^).                                     *\n"
+                 "* You can Add (+), multiply (*), and give exponent (^). example input: + 10 10 10           *\n"
                  "* ..........................................................................................*\n"
                  "* type 'quit' to exit the program                                                           *\n"
                  "* ..........................................................................................*\n"
-                 "* You can process a file with a set of operators which the program will process by line.    *\n"
+                 "* You can process a file with one operator and multiple operands per line.                  *\n"
                  "*********************************************************************************************\n"
                  "Created by Amir Torabi. \n"
-<< std::endl;
-    exit(1);
+     << std::endl;
+  	// exit(1);
 }
 
 string copy_next(int *index, string in){
@@ -79,7 +88,6 @@ string copy_next(int *index, string in){
     return out;
 }
 
-
 void argselect(int argc, char** argv)
 {
     const char* const opt = "hv";
@@ -92,12 +100,10 @@ void argselect(int argc, char** argv)
         {
         case 'v':
             verbose = true;
-
             std::cout << "verbose mode On" << std::endl;
             break;
         case 'h':
             printhelp();
-
             break;
         case '?':
             default:
@@ -106,7 +112,6 @@ void argselect(int argc, char** argv)
         }
     }
 }
-
 
 void add(string in)
 {
@@ -133,8 +138,20 @@ void add(string in)
         }
         index++;
     }
-    for(int i =res.size()-1; i >=0;i--)
-        cout<<res[i];
-    cout<<endl;
+    string newstring = "";
+    for(int i =res.size()-1; i >=0;i--) {
+         res[i];
+            }
+        reverse(res.begin(), res.end());
+
+        if(verbose == true)
+        {
+            cout << in << " = " << res;
+            cout << endl;
+        } else{
+            cout << res;
+            cout << endl;
+        }
+
 }
 
