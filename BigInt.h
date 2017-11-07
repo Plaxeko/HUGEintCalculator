@@ -10,10 +10,15 @@ class BigInt
     int index = 2;
     int carry = 0;
     int x,y,r;
+    bool verbose;
 
 
 public:
-    bool verbose = false;
-    void add(string in);
+    void put_verbose(bool verb);
     string copy_next(int *index, string in);
+    string add(string in,bool printResult);
+    string multiply(string in, bool printResult);
+    string exponent(string in);
+
+
 };

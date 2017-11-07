@@ -3,6 +3,8 @@
 #include <sstream>
 #include "BigInt.cpp"
 
+bool verbose = false;
+
 void printhelp();
 void argselect(int argc, char** argv);
 
@@ -10,7 +12,7 @@ void argselect(int argc, char** argv);
 
 int main(int argc, char** argv)
 {
-    cout << "\nType help for program use information. Type quit to exit.\n\n";
+cout << "\nType help for program use information. Type quit to exit.\n\n";
     argselect(argc, argv);
 
     string input;
@@ -20,32 +22,38 @@ int main(int argc, char** argv)
     readline >> sstream;
     //readline.ignore(input.length(),'#');
 
-    while(getline(cin, input) || !readline.eof())
+    while (getline(cin, input) || !readline.eof())
     {
-         if(input[0] == '#') continue;
-         if(tolower(input[0]) == 'q'){return 0;}
-         if(tolower(input[0]) == 'h')
-            {
-                printhelp();
-            }else{
+        if (input[0] == '#') continue;
+        if (tolower(input[0]) == 'q') { return 0; }
+        if (tolower(input[0]) == 'h')
+        {
+            printhelp();
+        }
+        else {
 
-                for(int i=0 ;i < input.size();i++){
-                    if(!(input[i]=='+' ||input[i]==' '||(input[i]>= '0' && input[i]<= '9')))
-                    {
-                        cout << "Please give one operator(+,*,^) and integer based operands.\n";
+            for (int i = 0; i <(int) input.size(); i++) {
+                if (!(input[i] == '*' || input[i] == '^' || input[i] == '+' || input[i] == ' ' || (input[i] >= '0' && input[i] <= '9')))
+                {
+                    cout << "Please give one operator(+,*,^) and integer based operands.\n";
                     //return 0;
-                        break;
-                    }
+                    break;
                 }
-                BigInt BI;
-                BI.add(input);
-                cout << endl;
-                }
-
+            }
+            BigInt BI;
+            if(verbose)
+                BI.put_verbose(true);
+            else
+                BI.put_verbose(false);
+            if(input[0]=='+') BI.add(input,true);
+            if (input[0] == '*') BI.multiply(input,true);
+            if (input[0] == '^') BI.exponent(input);
+            cout << endl;
+        }
     }
-        return 0;
-}
+    return 0;
 
+}
 
 void printhelp()
 {
@@ -69,7 +77,6 @@ void printhelp()
 
 void argselect(int argc, char** argv)
 {
-    BigInt BI;
     const char* const opt = "hv";
     while(true)
     {
@@ -79,7 +86,7 @@ void argselect(int argc, char** argv)
         switch(select)
         {
         case 'v':
-            BI.verbose = true;
+            verbose = true;
             std::cout << "verbose mode On" << std::endl;
             break;
         case 'h':
