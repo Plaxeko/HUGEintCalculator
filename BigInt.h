@@ -1,8 +1,6 @@
 
 #include <string>
 
-using namespace std;
-
 class BigInt
 {
     string res, cur;
