@@ -3,6 +3,8 @@
 #include <sstream>
 #include "BigInt.h"
 
+using namespace std;
+
 bool verbose = false;
 
 void printhelp();
