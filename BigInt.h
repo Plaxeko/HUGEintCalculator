@@ -1,5 +1,4 @@
 
-#include <string>
 
 class BigInt
 {
@@ -13,10 +12,10 @@ class BigInt
 
 public:
     void put_verbose(bool verb);
-    string copy_next(int *index, string in);
-    string add(string in,bool printResult);
-    string multiply(string in, bool printResult);
-    string exponent(string in);
+    std::string copy_next(int *index, std::string in);
+    std::string add(std::string in,bool printResult);
+    std::string multiply(std::string in, bool printResult);
+    std::string exponent(std::string in);
 
 
 };
