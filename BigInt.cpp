@@ -1,8 +1,11 @@
 
 #include <vector>
 #include <iostream>
+#include <string>
 #include <algorithm>    // std::reverse
 #include "BigInt.h"
+
+using namespace std;
 
 string BigInt::copy_next(int *index, string in){
     string out;
