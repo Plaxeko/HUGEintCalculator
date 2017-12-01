@@ -2,10 +2,11 @@
 #include <getopt.h>
 #include <sstream>
 #include <iostream>
+#include <stack>
 #include "BigInt.h"
 
 using namespace std;
-
+using namespace mesa;
 bool verbose = false;
 
 void printhelp();
@@ -38,8 +39,8 @@ cout << "\nType help for program use information. Type quit to exit.\n\n";
             for (int i = 0; i <(int) input.size(); i++) {
                 if (!(input[i] == '*' || input[i] == '^' || input[i] == '+' || input[i] == ' ' || (input[i] >= '0' && input[i] <= '9')))
                 {
-                    cout << "Please give one operator(+,*,^) and integer based operands.\n";
-                    //return 0;
+                    cout << "Please give one postfix expresion with integer based operands and (+,*,^) operators.\n";
+                    return -1;
                     break;
                 }
             }
@@ -48,14 +49,50 @@ cout << "\nType help for program use information. Type quit to exit.\n\n";
                 BI.put_verbose(true);
             else
                 BI.put_verbose(false);
-            if(input[0]=='+') BI.add(input,true);
-            if (input[0] == '*') BI.multiply(input,true);
-            if (input[0] == '^') BI.exponent(input);
-            cout << endl;
+            int index = 0;
+            string op1, op2, cur;
+            stack<string> operands;
+            for(int i = 0; index< input.size(); i++)
+            {
+				cur = BI.copy_next(&index, input);
+				if(cur == "*" || cur == "+" || cur == "^")
+				{
+					if(operands.size() >= 2) 
+					{
+						op1 = operands.top();
+						operands.pop();
+						op2 = operands.top();
+						operands.pop();
+						if(cur == "*") operands.push(BI.multiply(op1, op2, false));
+						else if(cur == "+") operands.push(BI.add(op1, op2, false));
+						else if(cur == "^") operands.push(BI.exponent(op2, op1, false));
+					}
+					else
+					{
+						cout<<"Error with the expresion "<<input<<endl;
+						return -1;
+					}
+				}
+				else{
+					for(int j = 0; j < cur.size();j++)
+					{
+						if(cur[j]<'0' || cur[j] > '9'){
+							cout<<"Error with operand "<<cur<<endl;
+							return -1;
+						}
+					}
+					operands.push(cur);
+				}
+			}
+			if(operands.size()!=1){
+				cout<<"Error with the expresion2 "<<input<<endl;
+				return -1;
+			}
+			op1 = operands.top();
+			cout << input << " = " << op1<<endl;
         }
     }
     return 0;
-
 }
 
 void printhelp()
@@ -67,11 +104,11 @@ void printhelp()
                  "* Restart program with flag -v for verbose mode or -h to print help screen                  *\n"
                  "* -v will set the system to verbose mode and display your input before the result.          *\n"
                  "* .............................................................................             *\n"
-                 "* You can Add (+), multiply (*), and give exponent (^). example input: + 10 10 10           *\n"
+                 "* You can Add (+), multiply (*), and give exponent (^). example input: a b c * +           *\n"
                  "* ..........................................................................................*\n"
                  "* type 'quit' or just 'q' to exit the program                                               *\n"
                  "* ..........................................................................................*\n"
-                 "* You can process a file with one operator and multiple operands per line.                  *\n"
+                 "* You can process a file with one postfix expresion per line.                               *\n"
                  "*********************************************************************************************\n"
                  "Created by Amir Torabi. \n"
     << std::endl;
