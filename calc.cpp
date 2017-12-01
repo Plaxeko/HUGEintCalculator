@@ -1,7 +1,10 @@
 
 #include <getopt.h>
 #include <sstream>
-#include "BigInt.cpp"
+#include <iostream>
+#include "BigInt.h"
+
+using namespace std;
 
 bool verbose = false;
 
