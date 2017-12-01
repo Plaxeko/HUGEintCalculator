@@ -5,7 +5,6 @@
 #include "BigInt.h"
 
 using namespace std;
-<<<<<<< HEAD
 namespace mesa{
 	string BigInt::copy_next(int *index, string in){
 		string out;
@@ -18,49 +17,6 @@ namespace mesa{
 		*index = *index + 1;
 		return out;
 	}
-=======
-
-string BigInt::copy_next(int *index, string in){
-    string out;
-    for(int i = *index;;i++){
-        if(in[i]==' ' || in[i]=='\0')
-            break;
-        out.push_back(in[i]);
-        *index = *index + 1;
-    }
-    reverse(out.begin(),out.end());
-    return out;
-}
-
-string BigInt::add(string in, bool printResult)
-{
-    string res, cur;
-    int index = 2;
-    int carry = 0;
-    int x, y, r;
-    while (index < (int)in.size())
-    {
-        cur = copy_next(&index, in);
-        while (res.size() > cur.size())
-            cur.push_back('0');
-        while (cur.size() > res.size())
-            res.push_back('0');
-        for (int i = 0; i < (int)cur.size(); i++)
-        {
-            x = cur[i] - '0';
-            y = res[i] - '0';
-            r = x + y + carry;
-            res[i] = (r % 10) + '0';
-            carry = r / 10;
-        }
-        if (carry == 1)
-        {
-            res.push_back('1');
-            carry = 0;
-        }
-        index++;
-    }
->>>>>>> origin/master
 
 	void BigInt::put_verbose(bool verb)
 	{
