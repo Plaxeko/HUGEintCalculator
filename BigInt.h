@@ -1,24 +1,20 @@
-
+#pragma once
 #include <string>
-
 using namespace std;
-
-class BigInt
+namespace mesa
 {
-    string res, cur;
+	class BigInt
+	{
+	private:
+		bool verbose;
 
-    int index = 2;
-    int carry = 0;
-    int x,y,r;
-    bool verbose;
+	public:
+		void put_verbose(bool verb);
+		std::string copy_next(int *index, std::string in);
+		std::string add(string A, string B, bool printResult);
+		std::string multiply(string A, string B, bool printResult);
+		std::string exponent(string base, string exp,  bool printResult);
 
+	};
+}
 
-public:
-    void put_verbose(bool verb);
-    string copy_next(int *index, string in);
-    string add(string in,bool printResult);
-    string multiply(string in, bool printResult);
-    string exponent(string in);
-
-
-};
